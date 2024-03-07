@@ -1,0 +1,167 @@
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: "Roboto";
+    font-size: 1rem;
+    box-sizing: border-box !important;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.jumbotron {
+    background-color: #DEDEDE;
+    padding: 1.5rem;
+    margin: 0;
+    margin-bottom: 1rem;
+    border-radius: 0.3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+form {
+    border: 1px solid darkgray;
+    border-radius: 0.3rem;
+    margin-bottom: 2rem;
+    box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+#div-in-form {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+}
+
+.col label {
+    width: 95%;
+    margin-bottom: 0.25rem;
+}
+
+.col input {
+    width: 90%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    border: 1px solid darkgray;
+    background-color: #ffffff;
+}
+
+.col input[type="text"]:focus {
+    outline-color: #007bff;
+}
+
+.col input[type="color"] {
+    padding: 0.2rem;
+    width: 95%;
+}
+
+#div-with-a {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+#div-with-a a {
+    margin: 0.5rem;
+    background-color: rgb(30, 144, 255);
+    color: white;
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+aside {
+    display: none;
+}
+
+.gameArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+td {
+    width: 125px;
+    height: 125px;
+    font-size: 50px;
+    border: 1px solid darkgray;
+    text-align: center;
+}
+
+table {
+    border-spacing: 0;
+}
+
+@media (min-width: 415px) and (max-width: 1181px) {
+    html {
+        font-size: 18px;
+    }
+
+    main {
+        width: 50%;
+    }
+
+    aside {
+        display: block;
+        width: 30%;
+    }
+
+    aside img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (min-width: 1182px) {
+
+    html {
+        font-size: 22px;
+    }
+
+    main {
+        width: 70%;
+    }
+
+    aside {
+        display: block;
+        width: 300px;
+    }
+
+    aside img {
+        width: 100%;
+        height: auto;
+    }
+
+    td {
+        width: 200px;
+        height: 200px;
+    }
+
+    #div-in-form {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col {
+        width: 49%;
+        margin-right: 0.5%;
+        margin-left: 0.5%;
+    }
+}
+
+.d-none {
+    display: none !important;
+}
