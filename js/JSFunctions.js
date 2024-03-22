@@ -20,7 +20,7 @@ oGameData.initGlobalObject = function () {
     //oGameData.gameField = Array("X", "", "", "X", "", "", "X", "", "");
     //oGameData.gameField = Array('X', '', '', '', 'X', '', '', '', 'X');
     //oGameData.gameField = Array('', '', 'X', '', 'X', '', 'X', '', '');
-    //oGameData.gameField = Array('X', 'O', 'X', '0', 'X', 'O', 'O', 'X', 'O');
+    oGameData.gameField = Array('', '', '', 'X', 'X', 'X', '', '', '');
 
     //Indikerar tecknet som skall användas för spelare ett.
     oGameData.playerOne = "X";
@@ -58,15 +58,14 @@ oGameData.checkHorizontal = function () {
             oGameData.gameField[row * 3 + 1] === oGameData.gameField[row * 3 + 2]
         ) {
             //returnerar vinnaren
-            if (oGameData.gameField[row] === oGameData.PlayerOne) {
+            if (oGameData.gameField[row * 3] === oGameData.playerOne) {
                 return 1;
             } else {
                 return 2;
             }
         }
-
-        return 0;
     }
+    return 0;
 };
 
 oGameData.checkVertical = function () {
