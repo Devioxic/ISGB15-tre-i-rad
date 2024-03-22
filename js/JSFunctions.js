@@ -25,6 +25,7 @@ function initiateGame() {
 
     allTiles.forEach((tile, _) => {
         tile.textContent = "";
+        tile.style.backgroundColor = "white";
     });
 
     let playerChar
@@ -42,11 +43,11 @@ function initiateGame() {
         oGameData.currentPlayer = oGameData.playerTwo;
     }
 
-    const jumbotron = document.querySelector(".jumbotron");
-    const jumbotronText = document.createTextNode(`Aktuell spelare är ${playerName}`);
+    const jumbotronText = document.querySelector(".jumbotron").querySelector("h1");
+    const jumbotronTextNode = document.createTextNode(`Aktuell spelare är ${playerName}`);
 
-    removeAllChildren(jumbotron); // Tar bort all text i jumbotron
-    jumbotron.appendChild(jumbotronText);
+    removeAllChildren(jumbotronText); // Tar bort all text i jumbotron
+    jumbotronText.appendChild(jumbotronTextNode);
 }
 
 function removeAllChildren(element) {
@@ -66,6 +67,8 @@ function validateForm() {
     try {
         if (Nickname1.value.length < MIN_NICKNAME_LENGTH || Nickname2.value.length < MIN_NICKNAME_LENGTH) {
             throw new Error("Namnet måste vara minst 5 tecken långt.");
+        } else if (Nickname1.value === Nickname2.value) {
+            throw new Error("Namnen får inte vara samma.");
         } else if (Color1.value === Color2.value) {
             throw new Error("Färgerna får inte vara samma.");
         } else if (Color1.value === "#000000" || Color2.value === "#000000") {
@@ -89,14 +92,13 @@ function startGamePressed(e) {
 }
 
 function loadGame() {
-    oGameData.initGlobalObject();
-
     const gameArea = document.getElementById("game-area");
     const startGameButton = document.getElementById("newGame");
 
     gameArea.classList.add("d-none");
 
     startGameButton.addEventListener("click", startGamePressed);
+    oGameData.initGlobalObject();
 }
 
 /**
@@ -244,7 +246,7 @@ oGameData.checkForGameOver = function () {
     return winner;
 };
 
-document.addEventListener("DOMContentLoaded", loadGame);
+window.addEventListener("load", loadGame);
 
 //Testutskrifter
 
