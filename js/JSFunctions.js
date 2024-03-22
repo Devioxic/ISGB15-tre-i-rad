@@ -6,6 +6,99 @@
  */
 let oGameData = {};
 
+function initiateGame() {
+    const form = document.querySelector("form");
+    form.classList.add("d-none");
+
+    const gameArea = document.getElementById("game-area");
+    gameArea.classList.remove("d-none");
+
+    const errorElement = document.getElementById("errorMsg");
+    removeAllChildren(errorElement);
+
+    oGameData.nickNamePlayerOne = document.getElementById("nick1").value;
+    oGameData.nickNamePlayerTwo = document.getElementById("nick2").value;
+    oGameData.colorPlayerOne = document.getElementById("color1").value;
+    oGameData.colorPlayerTwo = document.getElementById("color2").value;
+
+    const allTiles = gameArea.querySelectorAll("td");
+
+    allTiles.forEach((tile, _) => {
+        tile.textContent = "";
+    });
+
+    let playerChar
+    let playerName
+
+    const randomNumber = Math.round(Math.random());
+
+    if (randomNumber === 0) {
+        playerChar = oGameData.playerOne;
+        playerName = oGameData.nickNamePlayerOne;
+        oGameData.currentPlayer = oGameData.playerOne;
+    } else {
+        playerChar = oGameData.playerTwo;
+        playerName = oGameData.nickNamePlayerTwo;
+        oGameData.currentPlayer = oGameData.playerTwo;
+    }
+
+    const jumbotron = document.querySelector(".jumbotron");
+    const jumbotronText = document.createTextNode(`Aktuell spelare är ${playerName}`);
+
+    removeAllChildren(jumbotron); // Tar bort all text i jumbotron
+    jumbotron.appendChild(jumbotronText);
+}
+
+function removeAllChildren(element) {
+    while (element.firstChild) { // Genererat av Co-pilot, Lopen körs medans elementet har barn och tar bort första barnet
+        element.removeChild(element.firstChild);
+    }
+}
+
+function validateForm() {
+    const MIN_NICKNAME_LENGTH = 5;
+
+    const Nickname1 = document.getElementById("nick1")
+    const Nickname2 = document.getElementById("nick2")
+    const Color1 = document.getElementById("color1")
+    const Color2 = document.getElementById("color2")
+
+    try {
+        if (Nickname1.value.length < MIN_NICKNAME_LENGTH || Nickname2.value.length < MIN_NICKNAME_LENGTH) {
+            throw new Error("Namnet måste vara minst 5 tecken långt.");
+        } else if (Color1.value === Color2.value) {
+            throw new Error("Färgerna får inte vara samma.");
+        } else if (Color1.value === "#000000" || Color2.value === "#000000") {
+            throw new Error("Färgen får inte vara svart.");
+        } else if (Color1.value === "#ffffff" || Color2.value === "#ffffff") {
+            throw new Error("Färgen får inte vara vit.");
+        }
+        initiateGame();
+    } catch (error) {
+        const errorElement = document.getElementById("errorMsg");
+        const textNode = document.createTextNode(error.message);
+
+        removeAllChildren(errorElement);
+
+        errorElement.appendChild(textNode);
+    }
+}
+
+function startGamePressed(e) {
+    validateForm();
+}
+
+function loadGame() {
+    oGameData.initGlobalObject();
+
+    const gameArea = document.getElementById("game-area");
+    const startGameButton = document.getElementById("newGame");
+
+    gameArea.classList.add("d-none");
+
+    startGameButton.addEventListener("click", startGamePressed);
+}
+
 /**
  * Initerar det globala objektet med de attribut som ni skall använda er av.
  * Funktionen tar inte emot några värden.
@@ -151,15 +244,16 @@ oGameData.checkForGameOver = function () {
     return winner;
 };
 
+document.addEventListener("DOMContentLoaded", loadGame);
+
 //Testutskrifter
 
-console.log(oGameData);
-oGameData.initGlobalObject();
-console.log(oGameData.gameField);
+//console.log(oGameData);
+//console.log(oGameData.gameField);
 //console.log(oGameData.checkForGameOver());
 
-console.log(oGameData.checkHorizontal());
-console.log(oGameData.checkVertical());
-console.log(oGameData.checkDiagonalLeftToRight());
-console.log(oGameData.checkDiagonalRightToLeft());
-console.log(oGameData.checkForDraw());
+//console.log(oGameData.checkHorizontal());
+//console.log(oGameData.checkVertical());
+//console.log(oGameData.checkDiagonalLeftToRight());
+//console.log(oGameData.checkDiagonalRightToLeft());
+//console.log(oGameData.checkForDraw());
