@@ -6,6 +6,56 @@
  */
 let oGameData = {};
 
+function executeMove(e) {
+    const target = e.target
+    if (target.tagName !== "TD") {return;}
+
+    const index = target.getAttribute("data-id")
+    if (oGameData.gameField[index] !== "") {return;}
+
+    oGameData.gameField[index] = oGameData.currentPlayer;
+
+    let playerName;
+    
+    if (oGameData.currentPlayer === oGameData.playerOne) {
+        target.style.backgroundColor = oGameData.colorPlayerOne;
+        target.textContent = oGameData.playerOne;
+        oGameData.currentPlayer = oGameData.playerTwo;
+        playerName = oGameData.nickNamePlayerTwo;
+    } else {
+        target.style.backgroundColor = oGameData.colorPlayerTwo;
+        target.textContent = oGameData.playerTwo;
+        oGameData.currentPlayer = oGameData.playerOne;
+        playerName = oGameData.nickNamePlayerOne;
+    }
+
+    const jumbotronText = document.querySelector(".jumbotron").querySelector("h1");
+
+    jumbotronText.textContent = `Aktuell spelare är ${playerName}`;
+
+    const winner = oGameData.checkForGameOver();
+
+    if (winner === 1 || winner === 2 || winner === 3) { 
+        const gameArea = document.getElementById("game-area");
+        gameArea.querySelector("table").removeEventListener("click", executeMove);
+
+        const form = document.querySelector("form");
+        form.classList.remove("d-none");
+
+        if (winner === 1) {
+            jumbotronText.textContent = `Vinnare: ${oGameData.nickNamePlayerOne} Grattis!`;
+        } else if (winner === 2) {
+            jumbotronText.textContent = `Vinnare: ${oGameData.nickNamePlayerTwo} Grattis!`;
+        } else {
+            jumbotronText.textContent = "Oavgjort!";
+        }
+
+        gameArea.classList.add("d-none");
+
+        oGameData.initGlobalObject();
+    }
+}
+
 function initiateGame() {
     const form = document.querySelector("form");
     form.classList.add("d-none");
@@ -48,6 +98,8 @@ function initiateGame() {
 
     removeAllChildren(jumbotronText); // Tar bort all text i jumbotron
     jumbotronText.appendChild(jumbotronTextNode);
+    
+    gameArea.querySelector("table").addEventListener("click", executeMove);
 }
 
 function removeAllChildren(element) {
@@ -115,7 +167,7 @@ oGameData.initGlobalObject = function () {
     //oGameData.gameField = Array("X", "", "", "X", "", "", "X", "", "");
     //oGameData.gameField = Array('X', '', '', '', 'X', '', '', '', 'X');
     //oGameData.gameField = Array('', '', 'X', '', 'X', '', 'X', '', '');
-    oGameData.gameField = Array('', '', '', 'X', 'X', 'X', '', '', '');
+    //oGameData.gameField = Array('', '', '', 'X', 'X', 'X', '', '', '');
 
     //Indikerar tecknet som skall användas för spelare ett.
     oGameData.playerOne = "X";
